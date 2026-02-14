@@ -10,11 +10,12 @@ logsource:
   product: windows
   service: security
 detection:
-  selection_failed:
+  failed_logon:
     EventID: 4625
-  selection_success:
+  successful_logon:
     EventID: 4624
-  condition: selection_failed followed_by selection_success
+  timeframe: 5m
+  condition: failed_logon | count() by IpAddress > 5 followed_by successful_logon by IpAddress
 falsepositives:
   - User mistyping password
   - Password manager retry behavior
