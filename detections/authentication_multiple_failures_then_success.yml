@@ -14,8 +14,12 @@ detection:
     EventID: 4625
   successful_logon:
     EventID: 4624
+  failed_src_ip:
+    IpAddress|exists: true
+  success_src_ip:
+    IpAddress|exists: true
   timeframe: 5m
-  condition: failed_logon | count() by IpAddress > 5 followed_by successful_logon by IpAddress
+  condition: (failed_logon and failed_src_ip) | count() by IpAddress > 5 followed_by (successful_logon and success_src_ip) by IpAddress
 falsepositives:
   - User mistyping password
   - Password manager retry behavior
