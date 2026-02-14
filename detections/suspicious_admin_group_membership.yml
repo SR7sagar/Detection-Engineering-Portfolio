@@ -13,7 +13,11 @@ detection:
   selection:
     EventID: 4732
     TargetUserName: "Administrators"
-  condition: selection
+  exclude_known_admins:
+    SubjectUserName:
+      - "Administrator"
+      - "DOMAIN\\ITAdmin"
+  condition: selection and not exclude_known_admins
 falsepositives:
   - Legitimate IT administrative activity
   - Planned account provisioning
