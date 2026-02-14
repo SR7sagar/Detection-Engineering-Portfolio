@@ -1,0 +1,23 @@
+title: Suspicious Addition to Local Administrators Group
+id: 0002-priv-esc-admin-group
+status: experimental
+description: Detects when a user account is added to the local Administrators group, which may indicate privilege escalation activity.
+author: SR7
+date: 2026/02/14
+references:
+  - https://attack.mitre.org/techniques/T1068/
+logsource:
+  product: windows
+  service: security
+detection:
+  selection:
+    EventID: 4732
+    TargetUserName: "Administrators"
+  condition: selection
+falsepositives:
+  - Legitimate IT administrative activity
+  - Planned account provisioning
+level: high
+tags:
+  - attack.privilege_escalation
+  - attack.t1068
