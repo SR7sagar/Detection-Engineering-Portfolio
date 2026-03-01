@@ -129,7 +129,7 @@ AuthSimulation_CL
 | order by FirstSuccess desc
 ```
 
----
+
 
 # 🧩 Detection Logic
 
@@ -143,7 +143,7 @@ Ensure success occurred within 10 minutes after last failure
 
 Correlate on AccountName + IpAddress
 
----
+
 
 # MITRE ATT&CK Mapping
 
