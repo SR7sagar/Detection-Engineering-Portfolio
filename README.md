@@ -50,4 +50,53 @@ Detects brute force and password spraying behavior using Windows authentication 
 - IP + Account correlation
 - MITRE ATT&CK: T1110, T1078
 
-Project files:
+# Project files:
+
+Project structure:
+
+detections/
+│
+├── authentication_multiple_failures_then_success.yml
+├── authentication_multiple_failures_then_success_investigation.md
+└── README.md
+
+---
+
+# 📌 Investigation & Detection Approach
+
+Each detection project includes:
+
+- Behavioral logic explanation
+- Detection methodology
+- MITRE ATT&CK mapping
+- Investigation guidance
+- Tuning & validation considerations
+
+This ensures detections are not just rule-based, but operationally actionable within a SOC environment.
+
+---
+
+# 📈 Portfolio Focus
+
+This portfolio emphasizes:
+
+- Detection engineering over alert volume
+- Correlation logic over single-event matching
+- Automation & SOAR integration
+- Cloud-native architecture
+- IAM and operational troubleshooting
+- Threat coverage awareness
+
+---
+
+# 🧠 Engineering Philosophy
+
+Effective detection engineering requires:
+
+- Understanding attacker behavior
+- Modeling realistic detection logic
+- Validating ingestion pipelines
+- Ensuring automation reliability
+- Designing cost-efficient architectures
+
+This repository reflects applied engineering principles, not theoretical examples.
