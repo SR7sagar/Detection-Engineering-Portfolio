@@ -88,7 +88,7 @@ Validation query:
 AuthSimulation_CL
 | order by TimeGenerated desc
 | take 20
-```
+```bash
 
 Confirmed ingestion of:
 
@@ -104,7 +104,7 @@ LogonType
 
 Status
 ```
----
+
 ```
 # 🔎 Detection Engineering – Brute Force Correlation
 # 🎯 Detection Objective
