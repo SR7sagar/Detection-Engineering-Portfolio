@@ -78,13 +78,17 @@ curl -X POST https://<dce>.ingest.monitor.azure.com/dataCollectionRules/<dcr-id>
 
 Successful response:
 
+```bash
 HTTP/2 204
+```
 
 Validation query:
 
+```bash
 AuthSimulation_CL
 | order by TimeGenerated desc
 | take 20
+```
 
 Confirmed ingestion of:
 
@@ -99,6 +103,7 @@ IpAddress
 LogonType
 
 Status
+```
 
 🔎 Detection Engineering – Brute Force Correlation
 🎯 Detection Objective
@@ -106,6 +111,7 @@ Status
 Identify multiple failed authentication attempts followed by a successful login from the same IP and account within a short time window.
 
 🧠 Final Working KQL Query
+```bash
 AuthSimulation_CL
 | where EventID in (4624,4625)
 | summarize
@@ -119,6 +125,8 @@ AuthSimulation_CL
 | where FirstSuccess between (FirstFail .. LastFail + 10m)
 | project AccountName, IpAddress, FailCount, FirstFail, LastFail, FirstSuccess
 | order by FirstSuccess desc
+```
+
 🧩 Detection Logic
 
 Aggregate failed logons (EventID 4625)
@@ -136,6 +144,7 @@ MITRE ATT&CK Mapping
 T1110 – Brute Force
 
 T1078 – Valid Accounts
+```
 
 📊 Analytics Rule Configuration
 
@@ -157,6 +166,7 @@ Grouping Behavior
 Alerts grouped into a single incident
 
 Incident updated if rule re-triggers within grouping window
+```
 
 🤖 Automation & Playbook
 Automation Rule
@@ -191,6 +201,7 @@ This incident was automatically enriched by SOC lab playbook.
 
 Result:
 Automated comment appears in the Incident Activity Log.
+```
 
 🔐 IAM & Permission Resolution
 Problem
@@ -217,6 +228,7 @@ Logic App resource (Sentinel-BruteForce-Notify)
 
 Result:
 Playbook became selectable and automation executed successfully.
+```
 
 🛠 Troubleshooting Log
 
@@ -233,6 +245,7 @@ Ingestion delay vs time-window mismatch
 Incident grouping preventing automation trigger
 
 Playbook permission inheritance issue
+```
 
 💰 Cost Control Strategy
 
@@ -245,6 +258,7 @@ Logic App deployed using Consumption plan
 No continuous connectors enabled
 
 Estimated total lab cost: < £5
+```
 
 ✅ Validation Evidence
 
@@ -254,6 +268,7 @@ Estimated total lab cost: < £5
 ✔ Automation rule triggered
 ✔ Logic App executed
 ✔ Automated comment visible in Incident Activity Log
+```
 
 🏁 Conclusion
 
@@ -274,3 +289,4 @@ Azure IAM troubleshooting
 Cost-aware architecture design
 
 This implementation reflects real-world SOC engineering beyond static detection rules.
+```
