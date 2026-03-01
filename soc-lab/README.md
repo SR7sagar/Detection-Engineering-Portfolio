@@ -74,6 +74,7 @@ curl -X POST https://<dce>.ingest.monitor.azure.com/dataCollectionRules/<dcr-id>
   -H "Authorization: Bearer <JWT token>" \
   -H "Content-Type: application/json" \
   --data-binary @brute-live.json
+```
 
 Successful response:
 
