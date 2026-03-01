@@ -104,6 +104,7 @@ LogonType
 
 Status
 ```
+---
 ```
 # 🔎 Detection Engineering – Brute Force Correlation
 # 🎯 Detection Objective
