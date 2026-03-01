@@ -105,9 +105,7 @@ LogonType
 Status
 ```
 
----
 ```
-
 # 🔎 Detection Engineering – Brute Force Correlation
 # 🎯 Detection Objective
 
@@ -130,6 +128,7 @@ AuthSimulation_CL
 | project AccountName, IpAddress, FailCount, FirstFail, LastFail, FirstSuccess
 | order by FirstSuccess desc
 ```
+
 ---
 
 # 🧩 Detection Logic
@@ -152,8 +151,9 @@ T1110 – Brute Force
 
 T1078 – Valid Accounts
 ```
+```
 
-📊 Analytics Rule Configuration
+# 📊 Analytics Rule Configuration
 
 Rule Name:
 Brute Force Followed by Successful Login (Custom Table)
@@ -175,7 +175,8 @@ Alerts grouped into a single incident
 Incident updated if rule re-triggers within grouping window
 ```
 
-🤖 Automation & Playbook
+```
+# 🤖 Automation & Playbook
 Automation Rule
 
 Trigger:
@@ -188,7 +189,7 @@ Analytic rule name contains
 Action:
 Run playbook → Sentinel-BruteForce-Notify
 
-Logic App Playbook
+# Logic App Playbook
 
 Trigger:
 Microsoft Sentinel Incident (Preview)
@@ -209,8 +210,8 @@ This incident was automatically enriched by SOC lab playbook.
 Result:
 Automated comment appears in the Incident Activity Log.
 ```
-
-🔐 IAM & Permission Resolution
+```
+# 🔐 IAM & Permission Resolution
 Problem
 
 Playbook not selectable in automation rule due to insufficient permissions.
@@ -236,8 +237,8 @@ Logic App resource (Sentinel-BruteForce-Notify)
 Result:
 Playbook became selectable and automation executed successfully.
 ```
-
-🛠 Troubleshooting Log
+```
+# 🛠 Troubleshooting Log
 
 Resolved the following engineering issues:
 
@@ -253,8 +254,8 @@ Incident grouping preventing automation trigger
 
 Playbook permission inheritance issue
 ```
-
-💰 Cost Control Strategy
+```
+# 💰 Cost Control Strategy
 
 No virtual machines used
 
@@ -266,8 +267,8 @@ No continuous connectors enabled
 
 Estimated total lab cost: < £5
 ```
-
-✅ Validation Evidence
+```
+# ✅ Validation Evidence
 
 ✔ HTTP 204 ingestion responses
 ✔ Detection query returned correlated results
@@ -276,8 +277,8 @@ Estimated total lab cost: < £5
 ✔ Logic App executed
 ✔ Automated comment visible in Incident Activity Log
 ```
-
-🏁 Conclusion
+```
+# 🏁 Conclusion
 
 This lab demonstrates practical cloud-native detection engineering:
 
@@ -294,6 +295,6 @@ Automation & playbook integration
 Azure IAM troubleshooting
 
 Cost-aware architecture design
-
+```
 This implementation reflects real-world SOC engineering beyond static detection rules.
 ```
