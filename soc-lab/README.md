@@ -351,10 +351,6 @@ Without this, playbooks cannot be selected in automation rules.
 
 ---
 
-These issues reflect real-world SOC engineering challenges beyond basic detection rule creation.
-
----
-
 # 📈 Operational Impact & Metrics
 
 ### Detection Performance
