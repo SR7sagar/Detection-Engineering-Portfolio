@@ -104,13 +104,15 @@ LogonType
 
 Status
 ```
+---
 
-🔎 Detection Engineering – Brute Force Correlation
-🎯 Detection Objective
+# 🔎 Detection Engineering – Brute Force Correlation
+# 🎯 Detection Objective
 
 Identify multiple failed authentication attempts followed by a successful login from the same IP and account within a short time window.
 
-🧠 Final Working KQL Query
+# 🧠 Final Working KQL Query
+
 ```bash
 AuthSimulation_CL
 | where EventID in (4624,4625)
@@ -126,8 +128,9 @@ AuthSimulation_CL
 | project AccountName, IpAddress, FailCount, FirstFail, LastFail, FirstSuccess
 | order by FirstSuccess desc
 ```
+---
 
-🧩 Detection Logic
+# 🧩 Detection Logic
 
 Aggregate failed logons (EventID 4625)
 
@@ -139,7 +142,9 @@ Ensure success occurred within 10 minutes after last failure
 
 Correlate on AccountName + IpAddress
 
-MITRE ATT&CK Mapping
+---
+
+# MITRE ATT&CK Mapping
 
 T1110 – Brute Force
 
