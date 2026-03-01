@@ -1,22 +1,82 @@
-# SOC Lab (Azure Sentinel) — End-to-End Detection Engineering
+# Azure Sentinel SOC Lab – End-to-End Detection Pipeline
 
-This folder documents the complete SOC lab implementation:
-custom log ingestion via Logs Ingestion API (DCE/DCR) into Log Analytics,
-a scheduled analytics rule in Microsoft Sentinel, and automated response using
-an automation rule + Logic App playbook.
+This lab demonstrates a complete cloud-native detection engineering workflow using Azure Monitor, Microsoft Sentinel, and automated response via Logic Apps.
 
-## What’s Included
-- Ingestion pipeline (DCE, DCR, custom stream → custom table)
-- Test data simulation and validation (HTTP 204, KQL confirmation)
-- Detection logic (KQL rule) and analytics rule configuration
-- Automation rule and playbook (Logic App) with IAM permission fix
-- Troubleshooting notes and cost control decisions
+---
 
-## Lab Resources (High Level)
-- Log Analytics Workspace: `sentinel-lab-workspace`
-- Resource Group: `sentinel-lab-rg`
-- DCE: `sentinel-lab-dce`
-- DCR (custom ingestion): `sentinel-lab-dcr-direct`
-- Custom table: `AuthSimulation_CL`
-- Playbook: `Sentinel-BruteForce-Notify`
-- Automation rule: `BruteForce-Incident-AutoComment`
+# 1. Architecture Overview
+
+Custom Authentication Logs  
+        ↓  
+Logs Ingestion API  
+        ↓  
+Data Collection Endpoint (DCE)  
+        ↓  
+Data Collection Rule (DCR)  
+        ↓  
+Custom Log Table (AuthSimulation_CL)  
+        ↓  
+Scheduled Analytics Rule (5 min frequency / 15 min lookback)  
+        ↓  
+Incident Creation  
+        ↓  
+Automation Rule (Trigger: Incident Created)  
+        ↓  
+Logic App Playbook  
+        ↓  
+Automated Incident Comment Enrichment  
+
+---
+
+# 2. Environment Configuration
+
+Resource Group: `sentinel-lab-rg`  
+Workspace: `sentinel-lab-workspace`  
+Region: UK South  
+
+Data Collection Endpoint (DCE):  
+- Used for secure ingestion endpoint  
+- Region-aligned with workspace  
+
+Data Collection Rule (DCR):  
+- Stream: `Custom-AuthSimulationRaw`  
+- Destination: Log Analytics  
+- Table: `AuthSimulation_CL`  
+
+---
+
+# 3. Custom Log Ingestion Validation
+
+Data was sent using Azure Logs Ingestion API:
+
+```bash
+curl -X POST https://<dce>.ingest.monitor.azure.com/dataCollectionRules/<dcr-id>/streams/Custom-AuthSimulationRaw?api-version=2023-01-01 \
+  -H "Authorization: Bearer <JWT token>" \
+  -H "Content-Type: application/json" \
+  --data-binary @brute-live.json
+
+Successful ingestion response:
+
+HTTP/2 204
+
+Validation Query:
+
+AuthSimulation_CL
+| order by TimeGenerated desc
+| take 20
+
+Confirmed:
+
+EventID 4625 (failed logon)
+
+EventID 4624 (successful logon)
+
+AccountName
+
+IpAddress
+
+LogonType
+
+Status
+
+---
