@@ -14,6 +14,7 @@ This is not a static detection example — it is a full operational SOC pipeline
 ---
 
 # 🏗 Architecture Overview
+
 ![SOC Architecture](../images/soc-architecture.png)
 
 Custom Authentication Logs
