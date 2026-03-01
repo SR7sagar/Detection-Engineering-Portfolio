@@ -1,28 +1,20 @@
-Azure Sentinel SOC Lab – End-to-End Detection Pipeline
+# 🚀 Azure Sentinel SOC Lab – End-to-End Detection Pipeline
 
-This lab demonstrates a complete cloud-native detection engineering workflow using Azure Monitor, Microsoft Sentinel, and automated response via Logic Apps.
+This lab demonstrates a **cloud-native detection engineering workflow** using:
 
-The implementation includes:
+- Azure Monitor (Logs Ingestion API)
+- Microsoft Sentinel
+- Scheduled Analytics Rules
+- Automation Rules
+- Logic App Playbooks
+- IAM Permission Engineering
 
-Custom log ingestion via Logs Ingestion API (DCE + DCR)
+This is not a static detection example — it is a full operational SOC pipeline.
 
-Custom table ingestion validation (HTTP 204)
+---
 
-Correlation-based brute force detection (KQL)
+# 🏗 Architecture Overview
 
-Scheduled analytics rule (5-minute frequency)
-
-Incident creation
-
-Automation rule (incident-created trigger)
-
-Logic App playbook with automated enrichment
-
-IAM troubleshooting and permission resolution
-
-Cost-controlled cloud architecture (< £5)
-
-Architecture Overview
 
 Custom Authentication Logs
 ↓
@@ -32,64 +24,70 @@ Data Collection Endpoint (DCE)
 ↓
 Data Collection Rule (DCR)
 ↓
-Custom Log Table (AuthSimulation_CL)
+AuthSimulation_CL (Custom Log Table)
 ↓
 Scheduled Analytics Rule (5 min frequency / 15 min lookback)
 ↓
 Incident Creation
 ↓
-Automation Rule (Trigger: Incident Created)
+Automation Rule (Incident Created Trigger)
 ↓
 Logic App Playbook
 ↓
 Automated Incident Comment Enrichment
 
-Environment Configuration
 
-Resource Group: sentinel-lab-rg
-Workspace: sentinel-lab-workspace
-Region: UK South
+---
 
-Data Collection Endpoint (DCE):
+# ⚙ Environment Configuration
 
-Secure ingestion endpoint
+**Resource Group:** `sentinel-lab-rg`  
+**Workspace:** `sentinel-lab-workspace`  
+**Region:** UK South  
 
-Region-aligned with Log Analytics workspace
+### Data Collection Endpoint (DCE)
+- Secure ingestion endpoint
+- Region-aligned with Log Analytics workspace
 
-Data Collection Rule (DCR):
+### Data Collection Rule (DCR)
+- Stream: `Custom-AuthSimulationRaw`
+- Destination: Log Analytics
+- Output table: `AuthSimulation_CL`
+- Schema:
+  - TimeGenerated
+  - EventID
+  - AccountName
+  - IpAddress
+  - LogonType
+  - Status
 
-Stream: Custom-AuthSimulationRaw
+---
 
-Destination: Log Analytics
+# 📥 Custom Log Ingestion Validation
 
-Output table: AuthSimulation_CL
+Data sent via Azure Logs Ingestion API:
 
-Schema mapping: TimeGenerated, EventID, AccountName, IpAddress, LogonType, Status
+```bash
+curl -X POST https://<dce>.ingest.monitor.azure.com/dataCollectionRules/<dcr-id>/streams/Custom-AuthSimulationRaw?api-version=2023-01-01 \
+  -H "Authorization: Bearer <JWT token>" \
+  -H "Content-Type: application/json" \
+  --data-binary @brute-live.json
 
-Custom Log Ingestion Validation
-
-Data was sent using Azure Logs Ingestion API:
-
-curl -X POST https://<dce>.ingest.monitor.azure.com/dataCollectionRules/<dcr-id>/streams/Custom-AuthSimulationRaw?api-version=2023-01-01
--H "Authorization: Bearer <JWT token>"
--H "Content-Type: application/json"
---data-binary @brute-live.json
-
-Successful ingestion response:
+Successful response:
 
 HTTP/2 204
 
-Validation Query:
+Validation query:
 
 AuthSimulation_CL
 | order by TimeGenerated desc
 | take 20
 
-Confirmed fields:
+Confirmed ingestion of:
 
-EventID 4625 (failed logon)
+EventID 4625 (Failed logon)
 
-EventID 4624 (successful logon)
+EventID 4624 (Successful logon)
 
 AccountName
 
@@ -99,87 +97,78 @@ LogonType
 
 Status
 
-Detection Engineering – Brute Force Correlation
-
-Detection Objective:
+🔎 Detection Engineering – Brute Force Correlation
+🎯 Detection Objective
 
 Identify multiple failed authentication attempts followed by a successful login from the same IP and account within a short time window.
 
-Final Working KQL Detection Query:
-
+🧠 Final Working KQL Query
 AuthSimulation_CL
 | where EventID in (4624,4625)
 | summarize
-FailCount = countif(EventID == 4625),
-FirstFail = minif(TimeGenerated, EventID == 4625),
-LastFail = maxif(TimeGenerated, EventID == 4625),
-FirstSuccess = minif(TimeGenerated, EventID == 4624)
-by AccountName, IpAddress
+    FailCount = countif(EventID == 4625),
+    FirstFail = minif(TimeGenerated, EventID == 4625),
+    LastFail  = maxif(TimeGenerated, EventID == 4625),
+    FirstSuccess = minif(TimeGenerated, EventID == 4624)
+  by AccountName, IpAddress
 | where FailCount >= 5
 | where isnotnull(FirstSuccess)
 | where FirstSuccess between (FirstFail .. LastFail + 10m)
 | project AccountName, IpAddress, FailCount, FirstFail, LastFail, FirstSuccess
 | order by FirstSuccess desc
-
-Detection Logic Explanation:
+🧩 Detection Logic
 
 Aggregate failed logons (EventID 4625)
 
-Apply threshold (≥5 failures)
+Apply threshold (≥ 5 failures)
 
 Identify successful logon (EventID 4624)
 
-Ensure success occurred within 10 minutes after last failure
+Ensure success occurred within 10 minutes after the last failure
 
 Correlate on AccountName + IpAddress
 
-MITRE ATT&CK Alignment:
+MITRE ATT&CK Mapping
 
 T1110 – Brute Force
 
 T1078 – Valid Accounts
 
-Analytics Rule Configuration
+📊 Analytics Rule Configuration
 
 Rule Name:
 Brute Force Followed by Successful Login (Custom Table)
 
-Frequency:
-5 minutes
+Frequency: 5 minutes
+Lookback: 15 minutes
+Trigger Condition: Greater than 0 results
 
-Lookback Period:
-15 minutes
-
-Trigger Condition:
-Greater than 0 results
-
-Entity Mapping:
+Entity Mapping
 
 Account → AccountName
 
 IP → IpAddress
 
-Grouping Behavior:
+Grouping Behavior
 
 Alerts grouped into a single incident
 
 Incident updated if rule re-triggers within grouping window
 
-Automation & Playbook
-
-Automation Rule:
+🤖 Automation & Playbook
+Automation Rule
 
 Trigger:
 When incident is created
 
 Condition:
-Analytic rule name contains:
-Brute Force Followed by Successful Login (Custom Table)
+Analytic rule name contains
+"Brute Force Followed by Successful Login (Custom Table)"
 
 Action:
 Run playbook → Sentinel-BruteForce-Notify
 
-Logic App Playbook:
+Logic App Playbook
 
 Trigger:
 Microsoft Sentinel Incident (Preview)
@@ -187,8 +176,7 @@ Microsoft Sentinel Incident (Preview)
 Action:
 Add comment to incident
 
-Comment Template:
-
+Comment Template
 Automated Response Triggered
 
 Detection: Brute Force Followed by Successful Login
@@ -199,34 +187,39 @@ Failure Count: dynamic FailCount
 This incident was automatically enriched by SOC lab playbook.
 
 Result:
-Automated comment appears in Incident Activity Log.
+Automated comment appears in the Incident Activity Log.
 
-IAM & Permission Resolution
+🔐 IAM & Permission Resolution
+Problem
 
-Problem:
 Playbook not selectable in automation rule due to insufficient permissions.
 
-Root Cause:
-Azure Security Insights service principal lacked explicit role assignment at Logic App resource scope.
+Root Cause
 
-Fix Implemented:
+Azure Security Insights service principal lacked explicit role assignment at the Logic App resource scope.
+
+Fix Implemented
 
 Assigned role:
+
 Microsoft Sentinel Automation Contributor
 
 Assigned to:
+
 Azure Security Insights (Service Principal)
 
 Scope:
+
 Logic App resource (Sentinel-BruteForce-Notify)
 
-This resolved the playbook permission error.
+Result:
+Playbook became selectable and automation executed successfully.
 
-Troubleshooting Log
+🛠 Troubleshooting Log
 
-Issues encountered and resolved:
+Resolved the following engineering issues:
 
-InvalidStream error (incorrect stream name)
+InvalidStream error (incorrect DCR stream)
 
 InvalidToken error (expired Azure CLI token)
 
@@ -234,38 +227,36 @@ Tenant mismatch during token generation
 
 Ingestion delay vs time-window mismatch
 
-Incident grouping preventing new automation trigger
+Incident grouping preventing automation trigger
 
 Playbook permission inheritance issue
 
-Each issue was diagnosed and corrected to achieve a fully operational pipeline.
-
-Cost Control Strategy
+💰 Cost Control Strategy
 
 No virtual machines used
 
-Custom ingestion limited to small event volume
+Limited ingestion volume
 
-Logic App deployed using Consumption (multi-tenant) plan
+Logic App deployed using Consumption plan
 
 No continuous connectors enabled
 
-Estimated total lab cost < £5
+Estimated total lab cost: < £5
 
-Validation Evidence
+✅ Validation Evidence
 
 ✔ HTTP 204 ingestion responses
-✔ Detection query returns correlated results
+✔ Detection query returned correlated results
 ✔ Incident created automatically
 ✔ Automation rule triggered
 ✔ Logic App executed
 ✔ Automated comment visible in Incident Activity Log
 
-Conclusion
+🏁 Conclusion
 
-This lab demonstrates practical detection engineering skills:
+This lab demonstrates practical cloud-native detection engineering:
 
-Cloud-native ingestion engineering
+Custom ingestion engineering
 
 Correlation-based detection logic
 
@@ -273,11 +264,11 @@ MITRE ATT&CK alignment
 
 Sentinel analytics rule deployment
 
-Automation and playbook integration
+Automation & playbook integration
 
 Azure IAM troubleshooting
 
-Cost-conscious architecture design
+Cost-aware architecture design
 
-This implementation reflects real-world SOC engineering workflow beyond static detection rules.
+This implementation reflects real-world SOC engineering beyond static detection rules.
 ---
