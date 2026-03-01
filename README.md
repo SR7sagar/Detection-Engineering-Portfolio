@@ -1,5 +1,23 @@
 # Detection Engineering Portfolio
 
+---
+
+## 🚀 SOC Lab — End-to-End Sentinel Implementation
+
+This repository now includes a full Azure Sentinel SOC lab implementation:
+
+- Custom log ingestion via Logs Ingestion API (DCE + DCR)
+- Custom table ingestion validation (HTTP 204)
+- Correlation-based brute force detection (KQL)
+- Scheduled analytics rule (5-minute frequency)
+- Automation rule (incident-created trigger)
+- Logic App playbook with automated enrichment
+- IAM troubleshooting and permission resolution
+
+📂 Full lab documentation available here:
+➡️ [SOC Lab Implementation](./soc-lab/README.md)
+
+---
 This repository contains structured detection engineering projects aligned with MITRE ATT&CK and real-world SOC investigation workflows.
 
 Each project includes:
