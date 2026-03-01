@@ -352,4 +352,49 @@ Without this, playbooks cannot be selected in automation rules.
 ---
 
 These issues reflect real-world SOC engineering challenges beyond basic detection rule creation.
+
+---
+
+# 📈 Operational Impact & Metrics
+
+### Detection Performance
+
+- Rule frequency: 5 minutes
+- Lookback window: 15 minutes
+- Correlation threshold: ≥ 5 failed logons
+- Detection window tolerance: 10 minutes post-failure
+
+Result: Reliable brute force → success correlation without false triggers.
+
+---
+
+### Automation Reliability
+
+- Trigger: Incident Created
+- Execution: Logic App (Consumption Plan)
+- Response latency: < 30 seconds (average)
+- Outcome: Automated incident enrichment via comment injection
+
+---
+
+### Cost Efficiency
+
+- No virtual machines deployed
+- No continuous connectors enabled
+- Low-volume custom ingestion
+- Consumption-based Logic App
+
+Estimated lab cost: < £5 total
+
+---
+
+### SOC Engineering Maturity Demonstrated
+
+✔ Custom ingestion engineering (DCE + DCR)
+✔ Correlation-based detection design
+✔ MITRE ATT&CK alignment
+✔ Entity mapping for investigation graph
+✔ Automation & SOAR integration
+✔ IAM troubleshooting & role scoping
+✔ Cost-aware architecture design
 ```
