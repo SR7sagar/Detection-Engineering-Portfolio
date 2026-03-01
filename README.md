@@ -1,5 +1,19 @@
 # 🛡 Detection Engineering Portfolio
 
+## 👤 Professional Profile
+
+Security engineer focused on detection engineering, threat-informed analytics, and cloud-native SOC architecture.
+
+Specialized in:
+
+- Behavioral detection design (correlation-based logic)
+- MITRE ATT&CK-aligned threat modeling
+- Azure Sentinel analytics engineering
+- Custom telemetry ingestion (DCE + DCR)
+- SOAR automation design (Logic Apps)
+- Azure IAM and service principal role scoping
+- Cost-efficient cloud security architecture
+
 This repository showcases practical, production-style detection engineering projects built using structured threat modeling, MITRE ATT&CK alignment, and real-world SOC workflows.
 
 It demonstrates capabilities across:
