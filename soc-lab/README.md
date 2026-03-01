@@ -307,3 +307,49 @@ Cost-aware architecture design
 ```
 This implementation reflects real-world SOC engineering beyond static detection rules.
 ```
+
+---
+
+# 🧠 Engineering Lessons Learned
+
+### 1️⃣ Logs Ingestion API Requires Valid Azure CLI Token
+
+Expired JWT tokens cause `InvalidToken` errors.  
+Solution: Re-authenticate using `az login` and regenerate token before ingestion.
+
+---
+
+### 2️⃣ DCR Stream Names Must Match Exactly
+
+Incorrect stream names result in `InvalidStream` ingestion errors.  
+Stream name must match the Data Collection Rule configuration.
+
+---
+
+### 3️⃣ Time Window Alignment Affects Detection
+
+Ingestion delay combined with rule lookback window can prevent detection from triggering.  
+Adjusted detection window to 10 minutes to ensure reliable correlation.
+
+---
+
+### 4️⃣ Incident Grouping Impacts Automation Trigger
+
+If alerts are grouped into a single incident, automation may not re-trigger on subsequent matches.  
+Understanding Sentinel grouping logic is critical for reliable SOAR execution.
+
+---
+
+### 5️⃣ Logic App Permissions Are Not Inherited Automatically
+
+The Azure Security Insights service principal must be explicitly assigned:
+
+Role: Microsoft Sentinel Automation Contributor  
+Scope: Logic App resource
+
+Without this, playbooks cannot be selected in automation rules.
+
+---
+
+These issues reflect real-world SOC engineering challenges beyond basic detection rule creation.
+```
