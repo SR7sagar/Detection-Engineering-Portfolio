@@ -271,4 +271,4 @@ Azure IAM troubleshooting
 Cost-aware architecture design
 
 This implementation reflects real-world SOC engineering beyond static detection rules.
----
+'''
