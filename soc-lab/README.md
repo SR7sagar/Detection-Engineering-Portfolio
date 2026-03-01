@@ -150,6 +150,15 @@ Correlate on AccountName + IpAddress
 T1110 – Brute Force
 
 T1078 – Valid Accounts
+
+---
+
+# 📌 Detection Coverage Matrix
+
+| Technique | MITRE ID | Data Source | Detection Type | Status |
+|------------|----------|-------------|----------------|--------|
+| Brute Force | T1110 | AuthSimulation_CL | Correlation (Failure → Success) | Implemented |
+| Valid Accounts | T1078 | AuthSimulation_CL | Behavioral Authentication Analysis | Implemented |
 ```
 ```
 
