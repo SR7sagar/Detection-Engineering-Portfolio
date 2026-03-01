@@ -54,11 +54,13 @@ Detects brute force and password spraying behavior using Windows authentication 
 
 Project structure:
 
+```
 detections/
 │
 ├── authentication_multiple_failures_then_success.yml
 ├── authentication_multiple_failures_then_success_investigation.md
 └── README.md
+```
 
 ---
 
