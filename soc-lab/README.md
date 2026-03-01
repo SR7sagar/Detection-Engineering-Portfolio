@@ -46,14 +46,16 @@ Automated Incident Comment Enrichment
 **Region:** UK South  
 
 ### Data Collection Endpoint (DCE)
-- Secure ingestion endpoint
-- Region-aligned with Log Analytics workspace
+
+- Secure ingestion endpoint  
+- Region-aligned with Log Analytics workspace  
 
 ### Data Collection Rule (DCR)
-- Stream: `Custom-AuthSimulationRaw`
-- Destination: Log Analytics
-- Output table: `AuthSimulation_CL`
-- Schema:
+
+- Stream: `Custom-AuthSimulationRaw`  
+- Destination: Log Analytics  
+- Output table: `AuthSimulation_CL`  
+- Schema fields:
   - TimeGenerated
   - EventID
   - AccountName
@@ -73,13 +75,9 @@ curl -X POST https://<dce>.ingest.monitor.azure.com/dataCollectionRules/<dcr-id>
   -H "Content-Type: application/json" \
   --data-binary @brute-live.json
 
----
-
 Successful response:
 
 HTTP/2 204
-
----
 
 Validation query:
 
@@ -128,7 +126,7 @@ Apply threshold (≥ 5 failures)
 
 Identify successful logon (EventID 4624)
 
-Ensure success occurred within 10 minutes after the last failure
+Ensure success occurred within 10 minutes after last failure
 
 Correlate on AccountName + IpAddress
 
@@ -200,7 +198,7 @@ Playbook not selectable in automation rule due to insufficient permissions.
 
 Root Cause
 
-Azure Security Insights service principal lacked explicit role assignment at the Logic App resource scope.
+Azure Security Insights service principal lacked explicit role assignment at Logic App resource scope.
 
 Fix Implemented
 
@@ -275,4 +273,3 @@ Azure IAM troubleshooting
 Cost-aware architecture design
 
 This implementation reflects real-world SOC engineering beyond static detection rules.
-```
