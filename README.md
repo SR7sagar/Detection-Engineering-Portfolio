@@ -1,58 +1,53 @@
-# Detection Engineering Portfolio
+# 🛡 Detection Engineering Portfolio
+
+This repository showcases practical, production-style detection engineering projects built using structured threat modeling, MITRE ATT&CK alignment, and real-world SOC workflows.
+
+It demonstrates capabilities across:
+
+- Behavioral detection engineering
+- Correlation-based analytics (KQL)
+- Custom log ingestion (Azure Logs Ingestion API)
+- Microsoft Sentinel analytics rules
+- SOAR automation with Logic Apps
+- Azure IAM troubleshooting
+- Cost-aware cloud architecture design
 
 ---
 
-## 🚀 SOC Lab — End-to-End Sentinel Implementation
+# 🚀 Featured Project: End-to-End SOC Lab (Azure Sentinel)
 
-This repository now includes a full Azure Sentinel SOC lab implementation:
+A full cloud-native detection pipeline including ingestion, detection, incident creation, and automated enrichment.
 
-- Custom log ingestion via Logs Ingestion API (DCE + DCR)
-- Custom table ingestion validation (HTTP 204)
-- Correlation-based brute force detection (KQL)
-- Scheduled analytics rule (5-minute frequency)
-- Automation rule (incident-created trigger)
-- Logic App playbook with automated enrichment
-- IAM troubleshooting and permission resolution
+📂 View full implementation:
+➡️ [Azure Sentinel SOC Lab](./soc-lab/README.md)
 
-📂 Full lab documentation available here:
-➡️ [SOC Lab Implementation](./soc-lab/README.md)
+### Key Capabilities Demonstrated
 
----
-This repository contains structured detection engineering projects aligned with MITRE ATT&CK and real-world SOC investigation workflows.
+✔ Custom Data Collection Endpoint (DCE)  
+✔ Data Collection Rule (DCR) engineering  
+✔ Logs Ingestion API validation (HTTP 204)  
+✔ Correlation-based brute force detection  
+✔ Scheduled analytics rule deployment  
+✔ Entity mapping for investigation graph  
+✔ Automation rule (incident-created trigger)  
+✔ Logic App playbook integration  
+✔ IAM permission scoping & service principal role assignment  
+✔ Detection coverage matrix (MITRE-aligned)  
+✔ Operational metrics & reliability analysis  
 
-Each project includes:
-- Detection rule (Sigma format)
-- Behavioral logic explanation
-- Investigation methodology
-- Validation & tuning considerations
-- MITRE ATT&CK mapping
+This project reflects production-style SOC engineering beyond static detection examples.
 
 ---
 
-# Project 01 – Authentication Abuse Detection Engineering
+# 📂 Detection Engineering Projects
 
-## Objective
+## 1️⃣ Authentication Abuse – Multiple Failures Followed by Success
 
-Design and document a behavioral detection rule to identify brute force and password spraying activity using Windows Security logs.
+Detects brute force and password spraying behavior using Windows authentication telemetry.
 
-## Detection Logic
+- Correlation logic (4625 → 4624)
+- Threshold-based aggregation
+- IP + Account correlation
+- MITRE ATT&CK: T1110, T1078
 
-Correlates multiple failed logon attempts (Event ID 4625) followed by a successful logon (Event ID 4624) from the same IP address within a 5-minute window.
-
-## MITRE Mapping
-
-- T1110 – Brute Force  
-- T1078 – Valid Accounts  
-
-## Project Structure
-
-```text
-detections/
-│
-├── authentication_multiple_failures_then_success.yml
-├── authentication_multiple_failures_then_success_investigation.md
-└── README.md
-```
-
-
-
+Project files:
