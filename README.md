@@ -14,7 +14,7 @@ Specialized in:
 - Azure IAM and service principal role scoping
 - Cost-efficient cloud security architecture
 
-This repository showcases practical, production-style detection engineering projects built using structured threat modeling, MITRE ATT&CK alignment, and real-world SOC workflows.
+This repository documents production-style detection engineering implementations aligned to structured threat modeling and real-world SOC operations.
 
 It demonstrates capabilities across:
 
