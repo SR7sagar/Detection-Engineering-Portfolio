@@ -73,9 +73,13 @@ curl -X POST https://<dce>.ingest.monitor.azure.com/dataCollectionRules/<dcr-id>
   -H "Content-Type: application/json" \
   --data-binary @brute-live.json
 
+---
+
 Successful response:
 
 HTTP/2 204
+
+---
 
 Validation query:
 
