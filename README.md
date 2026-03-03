@@ -116,3 +116,8 @@ Effective detection engineering requires:
 - Designing cost-efficient architectures
 
 This repository reflects applied engineering principles, not theoretical examples.
+
+---
+
+# Author
+Sagar Timalsina
