@@ -104,8 +104,7 @@ IpAddress
 LogonType
 
 Status
-```
-```
+
 # 🔎 Detection Engineering – Brute Force Correlation
 # 🎯 Detection Objective
 
@@ -159,8 +158,6 @@ T1078 – Valid Accounts
 |------------|----------|-------------|----------------|--------|
 | Brute Force | T1110 | AuthSimulation_CL | Correlation (Failure → Success) | Implemented |
 | Valid Accounts | T1078 | AuthSimulation_CL | Behavioral Authentication Analysis | Implemented |
-```
-```
 
 # 📊 Analytics Rule Configuration
 
@@ -182,9 +179,7 @@ Grouping Behavior
 Alerts grouped into a single incident
 
 Incident updated if rule re-triggers within grouping window
-```
 
-```
 # 🤖 Automation & Playbook
 Automation Rule
 
@@ -218,8 +213,7 @@ This incident was automatically enriched by SOC lab playbook.
 
 Result:
 Automated comment appears in the Incident Activity Log.
-```
-```
+
 # 🔐 IAM & Permission Resolution
 Problem
 
@@ -245,8 +239,7 @@ Logic App resource (Sentinel-BruteForce-Notify)
 
 Result:
 Playbook became selectable and automation executed successfully.
-```
-```
+
 # 🛠 Troubleshooting Log
 
 Resolved the following engineering issues:
@@ -262,8 +255,7 @@ Ingestion delay vs time-window mismatch
 Incident grouping preventing automation trigger
 
 Playbook permission inheritance issue
-```
-```
+
 # 💰 Cost Control Strategy
 
 No virtual machines used
@@ -275,8 +267,7 @@ Logic App deployed using Consumption plan
 No continuous connectors enabled
 
 Estimated total lab cost: < £5
-```
-```
+
 # ✅ Validation Evidence
 
 ✔ HTTP 204 ingestion responses
@@ -285,8 +276,7 @@ Estimated total lab cost: < £5
 ✔ Automation rule triggered
 ✔ Logic App executed
 ✔ Automated comment visible in Incident Activity Log
-```
-```
+
 # 🏁 Conclusion
 
 This lab demonstrates practical cloud-native detection engineering:
@@ -306,8 +296,7 @@ Azure IAM troubleshooting
 Cost-aware architecture design
 
 This implementation reflects real-world SOC engineering beyond static detection rules.
-```
-```
+
 ---
 
 # 🧠 Engineering Lessons Learned
@@ -393,4 +382,3 @@ Estimated lab cost: < £5 total
 ✔ Automation & SOAR integration
 ✔ IAM troubleshooting & role scoping
 ✔ Cost-aware architecture design
-```
