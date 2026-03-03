@@ -105,6 +105,8 @@ LogonType
 
 Status
 
+---
+
 # 🔎 Detection Engineering – Brute Force Correlation
 # 🎯 Detection Objective
 
@@ -128,7 +130,7 @@ AuthSimulation_CL
 | order by FirstSuccess desc
 ```
 
-
+---
 
 # 🧩 Detection Logic
 
@@ -142,7 +144,7 @@ Ensure success occurred within 10 minutes after last failure
 
 Correlate on AccountName + IpAddress
 
-
+---
 
 # MITRE ATT&CK Mapping
 
@@ -158,6 +160,8 @@ T1078 – Valid Accounts
 |------------|----------|-------------|----------------|--------|
 | Brute Force | T1110 | AuthSimulation_CL | Correlation (Failure → Success) | Implemented |
 | Valid Accounts | T1078 | AuthSimulation_CL | Behavioral Authentication Analysis | Implemented |
+
+---
 
 # 📊 Analytics Rule Configuration
 
@@ -180,6 +184,8 @@ Alerts grouped into a single incident
 
 Incident updated if rule re-triggers within grouping window
 
+---
+
 # 🤖 Automation & Playbook
 Automation Rule
 
@@ -192,6 +198,8 @@ Analytic rule name contains
 
 Action:
 Run playbook → Sentinel-BruteForce-Notify
+
+---
 
 # Logic App Playbook
 
@@ -213,6 +221,8 @@ This incident was automatically enriched by SOC lab playbook.
 
 Result:
 Automated comment appears in the Incident Activity Log.
+
+---
 
 # 🔐 IAM & Permission Resolution
 Problem
@@ -240,6 +250,8 @@ Logic App resource (Sentinel-BruteForce-Notify)
 Result:
 Playbook became selectable and automation executed successfully.
 
+---
+
 # 🛠 Troubleshooting Log
 
 Resolved the following engineering issues:
@@ -256,6 +268,8 @@ Incident grouping preventing automation trigger
 
 Playbook permission inheritance issue
 
+---
+
 # 💰 Cost Control Strategy
 
 No virtual machines used
@@ -268,6 +282,8 @@ No continuous connectors enabled
 
 Estimated total lab cost: < £5
 
+---
+
 # ✅ Validation Evidence
 
 ✔ HTTP 204 ingestion responses
@@ -276,6 +292,8 @@ Estimated total lab cost: < £5
 ✔ Automation rule triggered
 ✔ Logic App executed
 ✔ Automated comment visible in Incident Activity Log
+
+---
 
 # 🏁 Conclusion
 
