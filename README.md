@@ -119,5 +119,14 @@ This repository reflects applied engineering principles, not theoretical example
 
 ---
 
+## Technical Blog
+
+I documented the complete implementation of this SOC detection engineering project in a technical article.
+
+🔗 **Read the full article on Medium:**  
+[Building a Cloud-Native SOC Detection Pipeline with Microsoft Sentinel](https://medium.com/@sagarsina58/building-a-cloud-native-soc-detection-pipeline-with-microsoft-sentinel-from-log-ingestion-to-9b29e21acf74)
+
+---
+
 # Author
 Sagar Timalsina
